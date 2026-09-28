@@ -1,0 +1,788 @@
+=============================================================================== 
+                           _______  _______  _______ 
+                          (  ___  )(  ____ \(  ____ \
+                          | (   ) || (    \/| (    \/
+                          | (___) || |      | (__    
+                          |  ___  || |      |  __)   
+                          | (   ) || |      | (      
+                          | )   ( || (____/\| (____/\
+                          |/     \|(_______/(_______/
+
+                            for Unreal Tournament
+                           (c) 2009-2026 - AnthraX
+===============================================================================
+
+-------------------------------------------------------------------------------
+                                  ACE Changes
+-------------------------------------------------------------------------------
+
+v1.4e:
+* [CHANGED] Updated NPLoader (v23 -> v25). Prompts to reinstall Windows
+  libraries when switching between 32-bit and 64-bit UT; files stay in System
+* [FIXED] Windows server DLL not loading on Win7 / Server 2008 R2
+
+v1.4d:
+* [CHANGED] ACE no longer hijacks the engine main loop. Per-frame checks now
+  run via a UGameEngine::Tick wrapper so UT469 raw-input mouse handling keeps
+  working on the engine's own loop (Windows and Linux)
+* [CHANGED] Removed leftover ACE sleep/appSleep hooks after the Tick wrapper
+  change
+* [FIXED] Fixed the Core hook count on the server after the sleep-hook removal
+* [FIXED] IACEv14 is no longer recompiled on every UnrealScript build. Rebuilding
+  it regenerated the package GUID and broke connecting to servers
+* [FIXED] Fixed a 64-bit NPLoader bind fatal ("not a DLL package") by installing
+  the loader .u into the engine package path (System) instead of the binaries
+  directory (System64)
+* [CHANGED] Updated NPLoader (v22 -> v23), including install-then-reconnect so
+  natives bind against settled files
+* [ADDED] OLDSKOOL.U to the default ACEFileList
+
+v1.4c:
+* [FIXED] Fixed a bug that was causing a false positive kick for Editor.dll
+* [FIXED] ACE Logo can now we moved using LogoXPos and LogoYPos config settings
+* [FIXED] Fixed a bug that was causing OpenAL32.dll to get flagged on 469b clients
+* [ADDED] Several small adjustments to reduce timeouts
+
+v1.4b:
+* [ADDED] ACE Windows x64 server support
+* [CHANGED] Minor update to NPLoader (v21 -> v22) and ACE installation
+
+v1.4a:
+* [ADDED] Native 64-bit Windows client support. ACE now runs natively on 64-bit
+  UT clients (System64). The client DLL is automatically selected based on game
+  architecture.
+* [ADDED] Linux x86/x64 client coverage for UT v469+ clients.
+* [ADDED] Windows ARM64 compatibility for players running UT through emulation
+  on ARM-based Windows devices.
+* [ADDED] Memory reader detection. Detects external tools accessing game memory.
+  Disabled by default - see bMemoryReaderDetection in SETTINGS.txt.
+* [ADDED] Code injection detection. Detects unauthorized code running in the
+  game process. Disabled by default - see bCodeInjectionDetection in SETTINGS.txt.
+* [ADDED] Pawn texture verification (brightskins detection). When AntiTweak is
+  enabled, ACE checks for texture modifications that make enemies more visible.
+  Legitimate effects (UDamage, Invisibility) are automatically excluded.
+* [ADDED] Thread watchdog. Additional protection against tampering with ACE's
+  scanning. Disabled by default - see bEnableThreadWatchdog in SETTINGS.txt.
+* [ADDED] Self-integrity verification.
+* [CHANGED] Encryption now uses cryptographically secure random number generation.
+* [CHANGED] AntiTweak detection has more coverage
+* [CHANGED] Various performance optimizations.
+* [CHANGED] Better handling of Windows hot-patches and compatibility shims,
+  reducing false positives on modern Windows systems.
+* [FIXED] False positive detections on ARM64 Windows.
+
+v1.3p:
+* [FIXED] Fixed a crash for people playing with SoftDrv in UT v469 RC10
+
+v1.3o:
+* [CHANGED] Lots of internal/backend changes
+
+v1.3n:
+* [FIXED] Fixed another bug in the vtable scanner. This bug caused false
+positive detections in Editor.dll.
+
+v1.3m:
+* [FIXED] Fixed a bug that caused false positive detections in the export hook
+scanner. This bug affected players playing on the ARM version of Windows 11.
+
+v1.3l:
+* [FIXED] Fixed several bugs in AutoConfig and PackageHelper that made ACE fail
+at identifying packages that should be on the UPackages list
+* [FIXED] Fixed a bug in the PlayerManager module that made ACE fail at
+verifying the hash of TacticalOps.exe
+
+v1.3k:
+* [FIXED] Fixed a bug that could make the game freeze
+* [FIXED] More small networking bugs
+
+v1.3j:
+* [FIXED] Some small networking bugs
+* [FIXED] HTTP 421 errors while downloading file/tweak list updates
+
+v1.3i:
+* [FIXED] False positive detections in the UFunction hook detector
+* [FIXED] Windows XP players with the 469 patch will now get checked
+
+v1.3h:
+* [CHANGED] Dropped support for pre-469 servers
+* [CHANGED] ACE will now check and verify your game launcher
+* [FIXED] More false positives in the vtable scanner triggered by changes in
+the upcoming 469e patch
+* [FIXED] Windows XP support
+
+v1.3g:
+* [FIXED] False positive detections in the vtable scanner due to changes in the
+code generation of Microsoft's C compiler
+* [FIXED] You should now be able to detect LODBias tweaks using ACE's AntiTweak
+protection
+* [ADDED] Linux/ARM64 server compatibility
+* [ADDED] Linux/AMD64 server compatibility
+* [CHANGED] By default, ACE now downloads its file and tweak lists updates from
+this public GitHub repository: https://github.com/stijn-volckaert/ACE_Lists/
+* [CHANGED] Updated ENet to a version that should work better for VPN users
+
+v1.3f:
+* [FIXED] Crash for players that install UT in a folder with non-ascii
+characters
+* [CHANGED] ACE now reports the full game version (including engine revision)
+to the game server
+
+v1.3e:
+* [CHANGED] Lots of performance optimizations
+* [CHANGED] Removed and disabled some deprecated options (such as highperftoggle)
+
+v1.3d:
+* [CHANGED] ACE now respects the engine frame rate limit for 469 clients
+* [CHANGED] Performance optimizations
+
+v1.3c:
+* [ADDED] Mods that are on ACE's UPackages list can automatically add additional
+file hashes and tweak list rules by installing an "ACEFileList-ModName.txt"
+and/or "ACETweakList-ModName.txt" file in the FileListPath/TweakListPath
+location.  ModName should be replaced by the base name (i.e., the file name
+without extension) of the mod.
+* [ADDED] Detection of certain cheats that automate player movement
+* [ADDED] Wine 6-8 compatibility
+* [ADDED] Compatibility with v469c 64-bit servers
+* [ADDED] You can now set the bLogKick option to 0 under [ACEvXXX_S.ACEActor] if
+you do not want ACE to create log files when kicking players
+* [FIXED] Fixed a bug that could make ACE freeze the game if you reconnected
+while ACE was initializing
+* [FIXED] Several bugs and false positive detections in the vtable scanner
+* [FIXED] ACE should no longer create screenshots if the bSShotWhenKick option
+is set to false
+
+v1.3b:
+* [CHANGED] On v469 clients, ACE now uses the game's built-in crosshair
+rendering functionality. As a result, ACE will now respect the crosshair
+rendering configuration in the game menu.
+* [CHANGED] Tweaked the heartbeat mechanism to reduce the likelihood of timeouts
+
+
+v1.3a:
+* [ADDED] Optional AntiTweak protection. This protection can be enabled by
+setting bAntiTweak to 1 under [ACEvXXX_S.ACEActor] in the server ini. The
+protection itself can be configured using the ACETweakList.txt file in the
+server system folder.
+
+If the protection is enabled, ACE will also automatically download updates for
+the tweak list. Auto updates can be toggled on or off using the
+bAutoUpdateTweaklist option. You can also set a custom tweak list provider using
+the TweakListProviderHost (default value: utgl.unrealadmin.org),
+TweakListProviderPath (default value: /ACE/), and TweakListName (default value:
+ACETweakList.txt) options.
+
+Finally, you can set a custom storage path for the tweak list using the
+TweakListPath option (default value: ../System/).
+
+* [CHANGED] Clients that get disconnected from the ACE PlayerManager will now
+attempt to reconnect. This change should drastically reduce the likelihood of
+timing out during the ACE checks.
+* [CHANGED] Removed several deprecated configuration options such as SleepMode,
+bNonStrictCapping, and CheckPriority
+* [FIXED] XC_Engine v25+ should now be compatible with ACE
+* [FIXED] False positive detections due to Editor.dll being loaded on clients
+* [FIXED] Inconsistent framerates and mouse behavior at high framerates
+* [FIXED] Timeouts for people who installed their games in folders containing
+non-ASCII characters
+
+v1.2e:
+* [CHANGED] Made changes in the networking code to eliminate timeouts for
+people using certain firewalls or NAT routers.
+* [FIXED] The crosshair no longer disappears when switching between servers
+running ACE v1.2 and servers running earlier versions of ACE
+* [FIXED] Various stability improvements for Linux servers
+
+v1.2d:
+* [FIXED] The SplashLogo code in previous versions of ACE triggered an engine
+bug that caused UGameEngine::Draw crashes. This should now be fixed
+* [FIXED] Some settings were not saving correctly for 469 clients
+* [FIXED] Crashes in player logging code on Linux servers
+* [CHANGED] Tweaked the netcode to significantly reduce the chances of timeout
+kicks
+* [ADDED] "mutate ace crosshairsmoothingtoggle" command to make the crosshair
+sharper at high resolutions
+
+v1.2c:
+* [FIXED] Eliminated a memory leak that caused crashes after getting a 
+connection error
+* [FIXED] False positive detections in UPackages that use dynamic arrays
+* [CHANGED] Detections that do not cause player kicks will no longer be logged
+unless the bVerboseLogging option under [ACEv12c_S.ACEActor] is set to true.
+
+v1.2b:
+* [CHANGED] Disabled the soundfix for 469 Clients
+* [CHANGED] Reinstated the 200 fps limit for 432-451 Clients
+* [FIXED] 432-451 can no longer go above the frameratelimit 
+
+v1.2a:
+* [ADDED] Wine 5 and Proton 5 compatibility
+* [CHANGED] ACE no longer supports the v400-451 Linux servers.
+* [CHANGED] Merged the PlayerManager code into the GameServer dll/so file
+
+v1.1f:
+* [FIXED] ACE no longer crashes your game when trying to check a package
+created by a really old version of Unreal Engine
+* [FIXED] Fixed another bug that could cause "GObjBeginLoadCount==0" assertion
+  crashes
+
+v1.1e: This is the first version that is compatible with the upcoming UT 469
+patch.  Several checks had to be rewritten or updated for the new patch. The
+file list included in the ACE v1.1e package does not have the hashes for the 469
+binaries yet, but an updated file list will be made available through the auto
+updater. Further changes include:
+* [FIXED] ACE no longer crashes the server the first time it boots after ACE's
+  installation. Sorry for taking so long to fix this :D
+* [FIXED] Several bugfixes in the memory scanner to handle dlls generated by
+  newer versions of visual studio
+* [FIXED] The game no longer crashes with a "GObjBeginLoadCount==0" assertion if
+  you reconnect while ACE is still initializing
+* [FIXED] Fixed Linux server crashes after a player disconnects
+* [FIXED] Missing information in kick logs
+* [FIXED] Deadlocks while switching maps
+* [FIXED] Several issues that could crash clients while connecting to an ACE server
+* [ADDED] Whitelisted Kentie's D3D11Drv
+* [ADDED] Whitelisted ENBSeries UT Bloom Alpha V2
+* [ADDED] Full support for XC_Engine (v24 only for now)
+
+v1.1d:
+* [FIXED] Exec commands such as suicide, throwweapon, and viewclass are no
+  longer being executed twice
+* [FIXED] The ACE logo now once again shows the current version
+
+v1.1c:
+* [FIXED] Kicks for corrupted D3D9.dll files (for people who had activated the
+  windows 10 developer mode)
+* [FIXED] Wine clients crashing
+* [FIXED] PlayerManager not spawning on WINE servers
+* [FIXED] AutoConfig now correctly handles case-insensitive file names on linux
+  servers
+* [FIXED] Internal Error -7 kicks for people using the latest win10
+* [ADDED] Support for the ENBSeries wrapper (latest version only!)
+* [CHANGED] This version of ACE comes with a new version of NPLoader. This new
+  version includes mostly low-level changes to improve stability, compatibility,
+  and to support other Unreal Engine games. One change that people will notice,
+  however, is that you no longer get disconnected when you have to install
+  mods. Instead, NPLoader starts a 60 second timer after which you get
+  disconnected from the server. This 60 second period should suffice to install
+  mods and manually reconnect.
+
+v1.1b:
+* [FIXED] Filelist updater no longer working on some platforms
+* [FIXED] Updated UScript call stack scanner to properly track state code
+* [FIXED] False positive kicks for some system dlls caused by changes in the
+  Visual C++ code generation back-end
+* [FIXED] Game server freezing during mapswitches
+* [FIXED] False positive kicks for corrupted ddraw.dll files caused by Windows
+  10's D3DX to D3D12 mapping layer
+* [FIXED] AutoConfig no longer discards UPackages that are still in the UEngine
+  PackageMap
+* [ADDED] New UScript protection feature: mods now need to be whitelisted to
+  access vector and rotator variables in a playerpawn class. This feature
+  replaces and improves a UScript protection routine I tested in v1.0d but
+  removed in v1.0e because it broke many legitimate mods (e.g., XConsole)
+* [ADDED] FileList definitions for the latest Kentie D3D Renderers
+* [CHANGED] Various performance fixes
+* [CHANGED] The client frame rate is now capped at 200fps (up from 180)
+* [CHANGED] Developers can now override the class used to spawn and render 
+  the ACE splash logo by modifying the BadgeNotifyClass option in the
+  ACEActor class.
+
+v1.0h:
+* [FIXED] ACE breaking the HUDMutator chain in some game types
+* [FIXED] Map switches taking a long time when the server is handling a lot of
+  traffic
+
+v1.0g:
+* [FIXED] Splash logo not appearing in TO
+* [FIXED] False positive kicks for system dlls in WINE 2.0
+* [FIXED] Autoconfig now properly recognizes all TOST files
+* [FIXED] False positive detections of package patches in certain packages
+  (e.g., s_SWAT, BotPack)
+* [CHANGED] Made the GameServer<->PlayerManager connection mechanism more
+  robust. This should fix timeout issues with -MULTIHOME (needs testing!!)
+
+v1.0f:
+* [FIXED] Timeouts on maps containing weapon code
+* [FIXED] Timeout issues on servers with 32+ network interfaces
+* [FIXED] General protection fault during map switches on the client side
+* [ADDED] Support for a lot of new skins (e.g., the official UT v400 hi-res
+  skins), renderers (e.g., OldUnreal XOpenGLDrv), mods
+
+v1.0e:
+* [FIXED] Restored compatibility with Windows XP/2003 servers (needs testing!)
+* [FIXED] Reverted earlier UScript checking update that caused false positive
+  detections of XConsole, specfix, ...
+* [FIXED] Reverted the earlier change that fixed the HUDMutator in BTPlusPlus
+* [CHANGED] The NIC detection routine now prefers interfaces with internet
+  access, even for local connections
+* [CHANGED] AutoConfig & PackageHelper now automagically find all HUDMutators
+  and add them to the checked packages list
+
+v1.0d:
+* [FIXED] Timeouts when loading more than 32 UPackages
+* [FIXED] Newer versions of ACE detecting GFileManager hooks (you might still
+  see v1.0d detect hooks left behind by v1.0c and earlier versions)
+* [FIXED] Re-enabled external logging for players joining the server (needs
+  testing!)
+* [FIXED] Reverted an earlier change that broke the loading logo in some game
+  types
+* [FIXED] Players are no longer kicked if an admin requests an sshot that is
+  successfully uploaded
+* [FIXED] There was a bug that caused the UScript cheat detection to break
+* [FIXED] Autoconfig failing to load files on servers with multiple folders for
+  the same file types
+* [FIXED] Possible false positive detections of package hooks (needs testing!)
+* [FIXED] Loading issues in TO 3.50
+* [ADDED] Extra UScript detection routine
+* [CHANGED] The PlayerManager is now a dll on Windows. This should fix server
+  installation issues for some people
+
+v1.0c:
+
+* [FIXED] Memory leak causing crashes on the client/server (this fix needs
+  testing!)
+* [FIXED] Invalid HMAC errors for players spamming reconnect
+* [FIXED] Unknown opcode -- FIXME anth kicks on Linux servers
+
+v1.0b:
+* [FIXED] PlayerManager crashes and high CPU usage on Windows (needs testing!)
+* [FIXED] Invalid HMAC errors
+* [FIXED] Missing hardware IDs for certain players
+* [FIXED] Crashes for certain players using Windows XP
+
+v1.0:
+* [CHANGED] Increased number of packages to 255
+* [ADDED] bStrictSystemLibrariesChecks option
+* [ADDED] Additional info for hook detections
+
+v0.9d:
+* [ADDED] User-friendly (sort of) kick messages
+* [ADDED] Reimplemented v0.8-style kick events for external mods
+* [ADDED] Digitally signed file lists
+* [ADDED] Debug functionality to ACENICHelper (can help to fix serverside
+  timeout issues)
+* [ADDED] Tweaks to prevent overly aggressive NAT routers from killing ACE
+  connections (and subsequently causing timeouts)
+* [ADDED] Windows 8/10 client support
+* [ADDED] FreeBSD 8.3/9.x/10.x server support (IPv4 only)
+* [ADDED] Live file list updating (the new updater can switch to new file lists
+  without rebooting the server)
+* [ADDED] Disassembly dumps in hook detection logs
+* [ADDED] Protection against replay attacks
+* [ADDED] System DLL verification. This feature is somewhat experimental and
+  might have to be removed later. If it works, it will catch some previously
+  undetected cheats. The down side is there might be performance issues for
+  players with (really) old pcs and there might be some false positives.
+* [CHANGED] Various improvements in the PE scanner module
+* [CHANGED] After years of struggling with the antiquated gcc 2.95 compiler,
+  I've decided to split the serverside native component into two separate
+  shared components. ACEv09d_S is now a small(ish) shared library that
+  requires gcc 2.95. The bulk of the serverside functionality is in
+  ACEv09d_M, however. This component compiles with modern compilers and is
+  substantially more reliable and easier to maintain.
+* [CHANGED] Improved detection of usable network interfaces on the server
+* [FIXED] Lots and lots of bugs
+* [FIXED] WINE kicks (again)
+
+v0.9c:
+* [FIXED] Crash when using mutate ace compattoggle
+* [FIXED] False positive vtable detection (dsound.dll)
+
+v0.9b:
+* [FIXED] Critical bug in the vtable scan. As a result of this bug, players were
+kicked when switching from v0.8h to v0.9 servers and had to restart their game
+in order to fix this.
+* [FIXED] Incompatibility with NexGen. The root cause for this is an Unreal
+Engine bug which I'll fix at a later date using ServerCrashFix.
+
+v0.9:
+* [ADDED] You can now specify the port you want ACE to listen on. There is
+also an option to allow ACE to try other ports if the specified port is not
+available.
+* [ADDED] There is a new option to enable checking for spectators.
+* [ADDED] Updated protection against both uscript based and native cheats
+* [ADDED] Official support for TO 3.40. ACE v0.8h already had experimental 
+support for TO but on most of the TO maps, automatic installation of the ACE 
+dll failed.
+* [FIXED] False positives
+* [FIXED] The infamous dodge bug (needs testing!)
+* [CHANGED] ACE can now automagically figure out which network interface it 
+should listen on. As a result, you no longer need to specify -MULTIHOME on
+some Linux servers.
+* [CHANGED] The whitelist/blacklist is now a plaintext file. Admins can easily
+add and remove files from this list themselves.
+* [CHANGED] Kick messages should be more comprehensive
+* [CHANGED] The serverside components were almost entirely moved to C++ and are
+now multithreaded. This should greatly reduce the load on the server.
+Because check coordination and feedback processing now happens in C++, the 
+ACE interface was completely revamped. However, to maintain compatibility with
+existing mods, player identification information (such as hardware ids) is 
+still accessible from uscript.
+* [CHANGED] ACEIpDrv was merged with ACE_S
+* [CHANGED] Client-side config is now read from/written to a version 
+independent config file. As a result, future versions of ACE will automatically
+use the same client settings as the v0.9 client.
+* [CHANGED] New networking system. The new system is much more resillient 
+against laggy/lossy connections.
+
+v0.8h:
+* [ADDED] Updated protection
+* [FIXED] Bug in highperf mode framerate capper
+* [FIXED] Movement glitches (automatic dodging)
+* [FIXED] Demo timer not resetting properly when using autorecord
+* [FIXED] AutoConfig not recognizing UPackages in <file>.<extension> format
+* [FIXED] Improved coping with connection issues
+* [CHANGED] Various optimizations
+* [CHANGED] By popular request, QPC is now used as the default timing method
+
+v0.8g:
+* [CHANGED] Optimizations
+* [FIXED] Minor bugs
+
+v0.8c:
+* [ADDED] Updated protection
+* [ADDED] Demo Status display! Shows whether or not you're recording a demo.
+This feature will delight a lot of people and will annoy the crap out of others
+so it can be toggled off easily using mutate ace setdemostatus or mutate ace
+hidedemostatus. Use mutate ace help for more info.
+* [ADDED] Affinity of the galaxy audio thread is now forced on multicore
+systems. This will hopefully prevent the sound from cracking up so much.
+* [ADDED] All Kentie D3D10 Renderers (up to v20) whitelisted
+* [ADDED] Minor performance tweaks
+* [FIXED] Screen freezing in WINE (whenever you moved the mouse)
+* [FIXED] Mousewheel macros (logitech/razer mice) were being ignored
+* [FIXED] Rare false positive in uscript cheat detection
+* [CHANGED] Hardware ID temporarily disabled for WINE clients
+* [CHANGED] Hardware ID reliability update
+* [CHANGED] Made the InternalError 61-1 check more intelligent. Should result
+less false positives but I can't promise anything
+
+v0.8b:
+* [FIXED] Installation of the SSE version was broken
+* [FIXED] Minor bug in the unloading routine
+* [CHANGED] Greatly optimized one of the most resource intensive routines
+(both speed and accuracy wise)
+
+v0.8:
+* [ADDED] Players now have to accept an EULA before installing ACE
+* [ADDED] ACE now comes in 3 different flavors (normal, SSE optimized
+and SSE/SSE2 optimized). NPLoader will automagically install the best version
+for your computer.
+* [ADDED] Updated protection
+* [ADDED] Option bAllowUnknownPackages allows players with certain unknown
+packages to join anyway (eg: UnrealShare, UnrealI)
+* [ADDED] Experimental TO 3.40 compatibility
+* [FIXED] Fixed a major bug in ACEIpDrv that caused timeouts and random
+random internal errors
+* [FIXED] Playback of serverside demos (needs testing!)
+* [FIXED] ACE dll no longer required to watch demos (needs testing!)
+* [CHANGED] New unloading method. No more freezes at the end of the map
+* [CHANGED] The ACE/NPLoader dlls are now hidden from AnthChecker
+* [CHANGED] Reverted a v0.7e change that caused minor framedrops
+* [CHANGED] New loading method. Players with Mac OS can now play without
+crashing. At least 2 players will be very happy with this change.
+* [CHANGED] Bandwidth use reduced
+* [CHANGED] ACE is now case insensitive when reading files on a linux server
+* [CHANGED] ACE now works on Linux v436 servers without the Core.so patch
+* [CHANGED] Major optimizations in the periodic scanning
+
+v0.7f:
+* [FIXED] Users not being kicked properly
+
+v0.7e:
+* [ADDED] The ACE AutoConfig actor now also detects nexgen hud extensions
+* [FIXED] Bug in the unloading routine that sometimes caused crashes
+* [FIXED] WINE false IAT hook (winmm!timeGetTime => kernel32!GetTickCount)
+* [FIXED] Screenshots are finally working properly
+* [FIXED] Screenshots cannot be taken while the player is loading ACE
+* [FIXED] Bug in the Uscript call detection that sometimes caused false logs
+* [FIXED] PackageHelper can now perform case insensitive file searches on linux
+* [CHANGED] Greatly improved the ACE AutoConfig actor
+
+v0.7d:
+* [FIXED] WINE incompatible ntdll.dll problem
+
+v0.7c:
+* [ADDED] Updated protection
+* [ADDED] ACE AutoConfig automatically adds maps with embedded code to the
+UPackages list
+* [ADDED] UnrealShare, UnrealI and Fire have been readded to the list of
+automatically checked packages
+* [FIXED] Players timing out when joining during pause
+* [FIXED] Bug in the Callstack scanner that caused false positives on some maps
+* [FIXED] Kick for people who came from UTDC servers
+* [FIXED] Several stability fixes for ACEIpDrv.so
+* [FIXED] Bug in the UPackage scanner that caused false positives (hooktype SE)
+* [CHANGED] ACE now unloads at the end of the map rather than during the
+mapswitch. Unloading has also been speeded up.
+* [CHANGED] Minor tweaks to resolve rare timeout/sshot timeout issues
+* [CHANGED] Improved protection added in v0.7/v0.7b
+* [CHANGED] The ACE AutoConfig actor can now automatically detect and add any
+custom huds, hudmutators, weapons and scoreboards you're running to the
+UPackages list.
+
+v0.7b:
+* [FIXED] Bug in the new protection
+* [FIXED] Typo that might have caused occasional framedrops on dualcore systems
+
+v0.7:
+* [ADDED] UTDC Compatible MAC Hash
+* [ADDED] Updated protection
+* [ADDED] Hardware ID
+* [ADDED] Load balancing in feedback system
+* [ADDED] New commands "mutate ace highperftoggle", "mutate ace playersettings"
+* [ADDED] "High Performance Mode": by using highperftoggle players can change
+their timing settings back to those in v0.6q
+* [FIXED] Another timeout issue
+* [FIXED] Logs/SShots not being written properly because of unsupported chars 
+in the filenames
+* [FIXED] Screenshots failing when taken on-demand or during the initial check
+* [FIXED] Small bug that caused a bit of lag when new players joined
+* [FIXED] Bug in the uscript cheat detection 
+* [FIXED] Critical bug in ACEIpDrv that made server crashing possible
+* [FIXED] "Assertion failed: GObjBeginLoadCount==0" crash
+* [CHANGED] Using timeGetTime and normal precision sleeps by default. Core
+restriction lifted for this timingmode. For other timingmodes (RDTSC, GTC, QPC)
+UT's rendering thread is still restricted to one core.
+* [CHANGED] Different system for illegal uscript call detection. Faster and much
+harder to bypass!
+* [CHANGED] Made several kickmessages more user-friendly
+* [CHANGED] Performance tweak in SleepMode 2
+* [CHANGED] Improved stability of framerate in compatibility mode
+* [CHANGED] Optimized loading routine for less lag
+* [CHANGED] Several core routines optimized
+* [CHANGED] SSE optimizations
+* [CHANGED] Major serverside performance optimizations
+
+v0.6q:
+* [FIXED] Initial check timeouts because of the cpu speed measurement
+* [FIXED] Garbagecollector crash
+* [FIXED] Bug in the AutoConfig/Main actor that lead to incompatibilities with EUT
+* [FIXED] Screenshots weren't sent properly during the initial check
+* [ADDED] A lot of common hacked uscript files are now recognised by ACE
+
+v0.6p:
+* [FIXED] Conflict with ngWorldStats in UT Demo
+* [FIXED] Security flaw in mac hash generation
+* [FIXED] Error in ACEIpDrv which could cause timeouts during check spawn
+* [FIXED] Another garbagecollector crash
+* [FIXED] UT Demo server stability issues
+* [FIXED] Timeouts are finally gone (mostly for people with older hardware)
+* [CHANGED] Performance tweaks for both the server and client
+
+v0.6o:
+* This build doesn't exist because "v0.6o" looks stupid
+
+v0.6n:
+* [ADDED] bDisableSoundFix option
+* [ADDED] mutate ace sftoggle command to toggle the soundfix function
+* [ADDED] mutate ace compattoggle command to toggle ace compatibility mode
+* [FIXED] Demo playback issues
+* [FIXED] Incompatibility with anthchecker
+* [FIXED] Garbagecollector issues
+* [FIXED] Memory corruption that caused random crashes. These crashes occured very frequently if
+the client was recording a demo using udemo's auto-recording function
+* [CHANGED] bNonStrictCapping option can now be used to let UTGLR handle frameratelimiting.
+Enabling this option might reduce "lag" and screen tearing while using UTGLR renderers with SwapInterval=0
+* [CHANGED] Speeded up the checks
+* [CHANGED] Default InitialCheckTimeout increased to 70 seconds (up from 60)
+
+v0.6m:
+* [FIXED] Crash for people with disabled firewalls
+* [FIXED] Another garbagecollector fix
+* [ADDED] Several missing packages on the whitelist
+
+v0.6l:
+* [FIXED] Crashes when using the -nosound commandline parameter
+* [FIXED] Crashes because of evil processes like windows blinds
+* [FIXED] Possible crash in the routine that cleans up UTDC v2.1's traces
+* [FIXED] Possible deadlock with timingmode 4
+* [FIXED] Garbagecollector crash
+* [FIXED] Minor bugs in ACEIpDrv
+* [CHANGED] New feedback system
+* [CHANGED] Reworked check spawn routine. Execution time down to ~0.5sec on my pc.
+* [ADDED] Quick Check in the check spawn routine. The quick check should detect all public bots
+* [ADDED] Automatic configuration of the firewall (UT.exe added to the allowed applications list)
+* [ADDED] Ingame logo
+
+v0.6k:
+* Experimental build
+
+v0.6j:
+* [ADDED] Full WINE compatibility
+
+v0.6i:
+* [FIXED] Package Scanner bugs due to the LeagueAS obfuscator
+* [FIXED] VCheck scan bug due to ALAudio.dll
+
+v0.6f:
+* [ADDED] Extra info for thunktable hooks
+* [ADDED] Dynamic timeout scaling. Allows older hardware to run the checks more slowly
+without timing them out.
+* [ADDED] ACE now cleans up all UTDC hooks from the memory (should eliminate many false positives)
+* [CHANGED] Fast dual cores (> 1.8Ghz) and 3+ core cpus run in "High Performance Mode"
+This is very similar to the timing mode used in v0.6d (not v0.6e!). Players can override
+this setting in User.ini (undocumented)
+* [CHANGED] Increased checkspawn timeout by 5 sec
+* [CHANGED] UT.exe, Editor.dll, Editor.u no longer checked because it's no longer needed
+* [FIXED] You no longer get kicked for playing with that steam UT version
+
+v0.6e:
+* [FIXED] Deadlock during mapswitches
+* [FIXED] Timeouts during check spawn after mapswitches
+* [CHANGED] Reverted v0.6d experimental fix
+
+v0.6d:
+* [CHANGED] New timing system
+* [CHANGED] Experimental timeout fix
+
+v0.6c:
+* [FIXED] Deadlock in CPU speed measurement
+* [FIXED] False iat hooks
+* [FIXED] Minor memory leaks
+* [CHANGED] Faster locking system
+
+v0.6b:
+* [FIXED] Identification of older processors
+* [CHANGED] Performance tweaks for multicore processors
+* [ADDED] Windows 2000 compatibility
+
+v0.6:
+* [ADDED] ACE now has it's own implementation of IpDrv.dll/IpDrv.so/IpDrv.u. This is
+done to circumvent some ancient bugs in this package.
+* [FIXED] Minor memory leaks
+* [FIXED] HUD rendering crash
+* [CHANGED] Memory usage down by 50%
+
+v0.5:
+* [FIXED] Major stability issues (frequent crashes while executing uscript bytecode)
+* [FIXED] Performance issues
+
+v0.4:
+* [CHANGED] LOTS and lots of optimizations to minimize the impact of ACE on
+single core processors.
+* [CHANGED] Got rid of the biggest resource hog
+* [ADDED] Updated protection.
+
+v0.3:
+* [FIXED] Implemented a workaround for a bug that caused the UT v348 DEMO linux 
+server to crash during mapswitches.
+* [FIXED] Another workaround for a bug that caused the UT v348 DEMO linux 
+server to refuse connections when more than 5 players were on the server.
+* [FIXED] Bug that froze players that timed out during the initial check.
+* [FIXED] Fixed a bug that caused the CPU speed detection on Core 2 Duo T2xxx
+CPUs (laptop series) to fail, resulting in lag/jerky play during the first 30
+seconds after joining the server.
+* [FIXED] Fixed a bug where the server would log a timeout for players that
+disconnected manually.
+* [FIXED] Minor vcheck bugs
+* [FIXED] Fixed a rare bug that would cause the timeout detection to trigger
+too early.
+* [FIXED] Fixed some "Accessed None" warnings in the serverlog.
+* [FIXED] Fixed a bug where external log files would not close properly during
+mapswitches/server shutdown.
+* [FIXED] Fixed some minor bugs in the official event handler that caused some
+external log files to be incomplete.
+* [CHANGED] Reworked checkspawn routine. Execution time down to 50%.
+* [CHANGED] LOTS of performance tweaks.
+* [ADDED] Several new protection routines.
+* [ADDED] Protection against certain tools that can cause the server to become
+unstable (such as masssuicide).
+
+
+v0.2:
+* [FIXED] Fixed a rare deadlock that caused the client to freeze during mapswitches.
+* [FIXED] Fixed a bug that caused players with non-US English versions of Windows XP to time out.
+* [CHANGED] Reworked feedback system for better security and performance.
+* [CHANGED] ACE now creates a seperate external log for each kick. Additionally,
+ACE can create a logfile with information about all the players who've joined
+your server (bExternalLogJoins). One log per map is created.
+* [ADDED] Screenshots. Thanks to PackageHelper_v12, ACE can store the 
+screenshots directly in JPEG format on the server. Screenshots are enabled
+by default (bSShotWhenKick). If a player gets kicked the kick message will only
+appear after the player has finished the upload of the sshot (or after 20
+seconds if the screenshot upload fails).
+* [ADDED] Merged the SoundFix code with ACE. This fix addresses a problem that
+causes certain sounds to become amplified when a demo is being recorded.
+* [ADDED] When bAutoConfig is enabled, ACE will spawn it's AutoConfig component
+during map startup. This component tries to set up your UPackages list for you.
+The AutoConfig is open source!
+
+v0.1:
+* First private beta
+
+-------------------------------------------------------------------------------
+                                NPLoader Changes
+-------------------------------------------------------------------------------
+
+v2.5:
+* [FIXED] Repeated install prompts after restarting and paths containing spaces
+* [FIXED] Prompts to reinstall mismatched Windows libraries after switching
+  between 32-bit and 64-bit UT. Files remain in System
+* [FIXED] Crash when installing ACE on Windows x86 and x64
+
+v2.4:
+* [FIXED] Restored automatic NPLoaderLL installation on UT469a-e by binding the
+  loader immediately so PreventExit can cancel the commandlet exit request
+* [CHANGED] UT469f and newer install NPLoaderLL and reconnect before binding it
+
+v2.3:
+* [FIXED] Install loader .u packages into System (package path) and natives
+  into System/System64 (binaries path) so 64-bit clients can bind correctly
+* [CHANGED] Install NPLoaderLL then reconnect so natives bind against settled
+  files
+
+v2.2:
+* [CHANGED] Package revision bump (v21 -> v22) with rebuilt native libraries
+
+v2.1:
+* [ADDED] 64-bit Windows client support. NPLoader now correctly installs and
+loads mods from the System64 folder for 64-bit clients.
+* [CHANGED] Simplified the installation confirmation GUI
+
+v1.6b:
+* [FIXED] Mods with only 1 embedded dll in the loader package didn't install
+properly.
+
+v1.6:
+* [ADDED] Mods can now attach an End User License Agreement to their infoclass.
+This EULA is displayed and must be accepted by the players prior to installing
+the mod on their computers.
+* [ADDED] Mods can now embed multiple dll files into the same loader package.
+Mod authors can specify the properties of each of these dll files (eg: minimum
+required OS, required instruction set, ...). NPLoader will automatically find
+and install the best of the embedded dlls.
+As a result of this, ACE can now support SSE2 and SSE without breaking
+compatibility with older hardware. A windows 9x version is being considered but
+it is in no way a priority.
+* [FIXED] Multiple system folder installation (eg: TO 3.40)
+* [FIXED] "Can't find function Main..." crash when installing NPLoaderLL on
+certain custom maps
+* [CHANGED] NPLoader can no longer install mods that have infoclasses in the
+old format (eg: UTDCv21/UTDCPlus)
+
+v1.5e:
+* [CHANGED] Linux users are now always asked to manually install NPLoaderLL
+
+v1.5d:
+* [FIXED] More garbagecollector crashes...
+
+v1.5c:
+* [ADDED] Win9x Support
+* [FIXED] More garbagecollector crashes
+* [FIXED] Demo playback issues
+
+v1.5b:
+* [FIXED] Garbagecollector crashes
+
+v1.5:
+* [FIXED] Installation errors under Windows Vista/7 Compatibility mode
+* [FIXED] Auto mod installer bug (serverside)
+
+v1.4:
+* [CHANGED] New installation system. This will be much faster and more reliable
+than the v1.3 system.
+* [ADDED] Linux support.
+
+===============================================================================

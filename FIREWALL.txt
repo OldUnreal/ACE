@@ -1,0 +1,45 @@
+=============================================================================== 
+                           _______  _______  _______ 
+                          (  ___  )(  ____ \(  ____ \
+                          | (   ) || (    \/| (    \/
+                          | (___) || |      | (__    
+                          |  ___  || |      |  __)   
+                          | (   ) || |      | (      
+                          | )   ( || (____/\| (____/\
+                          |/     \|(_______/(_______/
+
+                            for Unreal Tournament
+                           (c) 2009-2026 - AnthraX
+===============================================================================
+
+ACE's PlayerManager component needs a dedicated UDP port that is
+accessible from the outside. When using default settings, ACE will try
+to find a suitable port for the PlayerManager automatically. For
+people using firewalls or who are running servers behind NAT routers
+however, there is an option to specify which port ACE should use.
+
+===============================================================================
+To configure a fixed port, add the following lines to your server.ini:
+===============================================================================
+
+[ACEv14e_S.ACEActor]
+ACEPort=<YourPort>
+bAllowOtherPorts=false
+
+===============================================================================
+Alternatively, you can use the default settings:
+===============================================================================
+
+[ACEv14e_S.ACEActor]
+ACEPort=0
+bAllowOtherPorts=true
+
+When using these settings, ACE will try to bind GameserverPort+2 if it is
+available. If the port is not available, ACE will continue to try higher ports.
+These settings mimic the ACE v0.8+ behaviour.
+
+===============================================================================    
+    !!! Please note that ACE v0.9+ uses =>UDP<= ports, rather than TCP. !!!
+===============================================================================
+
+===============================================================================

@@ -1,0 +1,207 @@
+=============================================================================== 
+                           _______  _______  _______ 
+                          (  ___  )(  ____ \(  ____ \
+                          | (   ) || (    \/| (    \/
+                          | (___) || |      | (__    
+                          |  ___  || |      |  __)   
+                          | (   ) || |      | (      
+                          | )   ( || (____/\| (____/\
+                          |/     \|(_______/(_______/
+
+                            for Unreal Tournament
+                           (c) 2009-2026 - AnthraX
+===============================================================================
+
+To configure ACE, add the following lines to the server.ini:
+
+[ACEv14e_S.ACEActor]
+; Networking options
+ACEPort=0
+bAllowOtherPorts=true
+bAutoFindWANIp=true
+bCacheWANIP=true
+WANQueryServer[0]=utgl.unrealadmin.org/ip.php
+ForcedWANIP=0.0.0.0
+; Screenshot options
+SShotPath=../Shots/
+SShotPrefix=[ACE]
+SShotTimeOut=40.0
+bSShotWhenKick=true
+AdminPass=
+; Filelist options
+bAutoUpdateFileList=true
+FileListName=ACEFileList.txt
+FileListPath=./
+FileListProviderHost=utgl.unrealadmin.org
+FileListProviderPath=/ACE/
+; Tweaklist options
+TweakListName=ACETweakList.txt
+TweakListPath=./
+TweakListProviderHost=utgl.unrealadmin.org
+TweakListProviderPath=/ACE/
+; Logging options
+LogPath=../Logs/
+LogPrefix=[ACE]
+bLogKick=true
+; Autoconfig options
+bAutoConfig=true
+AutoConfigPackage=ACEv14_AutoConfig
+UPackages[0]=
+NativePackages[0]=
+PackageHelperClass=PackageHelper_v15.PHActor
+; Checking options
+HandshakeTimeout=30.0
+InitialCheckTimeout=70.0
+PeriodicCheckInterval=45.0
+PeriodicCheckVariance=15.0
+PeriodicCheckTimeout=60.0
+bStrictSystemLibraryChecks=false
+bCheckSpectators=true
+bEnableAntiTweak=false
+; Thread Watchdog (detects SuspendThread attacks)
+bEnableThreadWatchdog=false
+ThreadWatchdogThreshold=60
+ThreadWatchdogStrikes=2
+; Experimental Settings
+bMemoryReaderDetection=false
+MemoryReaderAction=0
+bMemoryReaderIgnoreSigned=true
+bCodeInjectionDetection=false
+CodeInjectionAction=0
+bCodeInjectionIgnoreSigned=true
+; Miscellaneous
+bAllowCrosshairScaling=true
+bShowLogo=true
+LogoXPos=10
+LogoYPos=100
+HUDMutatorClass=IACEv14.ACEHUDMutator
+bCreateEndShots=false
+
+===============================================================================
+Supported Settings:
+===============================================================================
+
+This list is not complete. It only shows the most common/useful configuration
+options.
+
+-------------------
+Networking Options:
+-------------------
+* ACEPort, bAllowOtherPorts: See FIREWALL.txt
+* bAutoFindWANIp, bCacheWANIP, WANQueryServer: See NAT.txt
+* ForcedWANIP: Forces ACE clients to connect to the playermanager through the
+  specified IPv4 address. ACE will ignore this setting if bAutoFindWANIp is
+  enabled.
+
+-------------------
+Screenshot Options:
+-------------------
+* SShotPath: Folder in which the screenshots should be stored
+* SShotPrefix: Prefix for the screenshot file names
+* SShotTimeout: Time allowed for players to complete sending a screenshot
+* bSShotWhenKick: When set to true, the gameserver will request screenshots to
+  be taken when a player is kicked
+* AdminPass: when configured, this adminpass can be used to take silent 
+  screenshots
+
+-----------------
+FileList Options:
+-----------------
+* bAutoUpdateFileList: when set to true, ACE will automatically download 
+  updates for the FileList. 
+* FileListName: Name of the FileList
+* FileListPath: Folder in which to store the FileList
+* FileListProviderHost: Hostname of the server that hosts the latest file lists
+* FileListProviderPath: Path (on the host) in which we should look for the file
+  lists
+* bAutoUpdateTweakList, TweakListName, TweakListPath, TweakListProviderHost,
+  TweakListProviderPath: Same as the above, but for the tweak list
+
+----------------
+Logging Options:
+----------------
+* LogPath: Folder in which the logs should be stored
+* LogPrefix: Prefix for the log file names
+* bLogKick: If set to true, ACE will create log files when kicking a player
+
+-----------------
+Checking Options:
+-----------------
+* HandshakeTimeout: Time allowed for the players to complete the handshake
+* InitialCheckTimeout: Time allowed for the players to complete the initial
+  check. Please note that the initial check usually takes longer to complete
+  than the periodic check.
+* PeriodicCheckInterval: Time between consecutive periodic checks
+* PeriodicCheckVariance: Randomizes check interval by ±X seconds to make timing
+  unpredictable (default: 15). E.g., with Interval=45 and Variance=15, checks
+  happen between 30-60 seconds apart.
+* PeriodicCheckTimeout: Time allowed for players to complete the periodic check
+* bStrictSystemLibraryChecks: When set to true, ACE will kick for patches in
+  system libraries. Very few cheats patch system libraries but lots of external
+  tools do. Thus, setting this to true may cause lots of false positives.
+* bEnableAntiTweak: Enables ACE's tweak blocking. I strongly urge you not to
+  enable this for non-competitive games!
+* bCheckSpectators: When set to true, ACE will also check spectators
+
+-----------------------
+Thread Watchdog Option:
+-----------------------
+Monitors ACE's internal threads for tampering attempts.
+
+RECOMMENDATION: Leave disabled for casual servers. Enable for competitive play.
+
+* bEnableThreadWatchdog: Enable thread monitoring (default: false)
+* ThreadWatchdogThreshold: Seconds before recording a strike (default: 60)
+* ThreadWatchdogStrikes: Strikes needed before kick (default: 2)
+
+-------------------
+AutoConfig Options:
+-------------------
+* bAutoConfig: When set to true, ACE will attempt to automatically configure
+  the UPackages list.
+* AutoConfigPackage: Name of the AutoConfig package (without the .u extension)
+* UPackages: Names of extra mods to be checked by ACE (with .u extensions)
+* NativePackages: Names of extra libraries to be checked by ACE (with .dll)
+* PackageHelperClass: Name of the packagehelper class. AutoConfig uses
+  packagehelper to figure out which mods it should add to the UPackages list
+
+---------------------------------
+Experimental Settings:
+---------------------------------
+These features are DISABLED by default. Test thoroughly before enabling kicks.
+
+RECOMMENDATION: Start with Action=0 (Log only) to monitor for false positives.
+
+Memory Reader Detection - Detects external tools accessing game memory.
+
+* bMemoryReaderDetection: Enable detection (default: false)
+* MemoryReaderAction: 0=Log, 1=Flag, 2=Kick
+* bMemoryReaderIgnoreSigned: Whitelist signed processes (default: true)
+
+Code Injection Detection - Detects injected code in the game process.
+
+* bCodeInjectionDetection: Enable detection (default: false)
+* CodeInjectionAction: 0=Log, 1=Flag, 2=Kick
+* bCodeInjectionIgnoreSigned: Whitelist signed modules (default: true)
+
+FALSE POSITIVES: Rare with IgnoreSigned=true. Possible from unsigned overlay
+software (some screen recorders, older Discord versions).
+
+----------------------
+Miscellaneous Options:
+----------------------
+* bAllowCrosshairScaling: when set to true, players are allowed to change the
+  rendering scale of their crosshairs. Does not work with EUT!
+* bShowLogo: when set to true, ACE will render a logo that shows the progress
+  of the initial check.
+* LogoXPos: X-Offset of the logo (in pixels, relative to the left side of the 
+  screen)
+* LogoYPos: Y-Offset of the logo (in pixels, relative to the middle horizontal)
+* HUDMutatorClass: Name of the HUDMutator that renders ACE's splash logo. This
+  must be a subclass of IACEv14.ACEHUDMutator
+* bCreateEndShots: If set to true, ACE will automatically request a screenshot
+  from every player when the current game has ended. If you decide to enable
+  this option, you should ensure that your server waits for a while before
+  switching maps!
+
+===============================================================================
