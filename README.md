@@ -113,7 +113,8 @@ wotgrealexporter, or download it from <https://github.com/stijn-volckaert/>.
 
 ## Support
 
-<https://ut99.org/viewforum.php?f=66>
+Ask in the `#ace-discussion` channel on the
+[OldUnreal Discord](https://discord.gg/thURucxzs6).
 
 ## License
 
