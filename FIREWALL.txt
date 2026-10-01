@@ -19,7 +19,7 @@ people using firewalls or who are running servers behind NAT routers
 however, there is an option to specify which port ACE should use.
 
 ===============================================================================
-To configure a fixed port, add the following lines to your server.ini:
+To configure a fixed port, add the following lines to your server's ini file:
 ===============================================================================
 
 [ACEv14e_S.ACEActor]

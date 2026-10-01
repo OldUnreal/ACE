@@ -22,8 +22,8 @@
 * Unzip this package into your server's UT folder. Make sure that the Logs and
 Shots folders are created!
 
-* Open your server's UnrealTournament.ini file and browse to the 
-[Engine.GameEngine] section.
+* Open your server's ini file (UnrealTournament.ini, or the file passed with
+ini= on the command line) and browse to the [Engine.GameEngine] section.
 
 * Remove all ServerActors and ServerPackages for previous ACE and NPLoader
   packages.
@@ -50,8 +50,8 @@ make sure you delete the FileListProvider and TweakListProvider settings!
 * Unzip this package into your server's UT folder. Make sure that the Logs and
 Shots folders are created!
 
-* Open your server's UnrealTournament.ini file and browse to the 
-[Engine.GameEngine] section.
+* Open your server's ini file (UnrealTournament.ini, or the file passed with
+ini= on the command line) and browse to the [Engine.GameEngine] section.
 
 * Add:
   
@@ -67,7 +67,7 @@ Shots folders are created!
 For most people, ACE will work fine with the default settings. Should
 you run any custom mods that perform rendering or input operations and that
 are not recognized by ACE, then add the following section to your server's
-UnrealTournament.ini file:
+ini file:
 
 [ACEv14_AutoConfig.ACEAutoConfigActor]
 UPackages[0]=
@@ -91,8 +91,13 @@ modifications.
 * ACEv14_AutoConfig: This is a small mod that automatically sets up the ACE
 UPackages list. Once again, you're more than welcome to edit this.
 
-You can use wotgrealexporter to export the source code from the .u files
-or you can download the source code from:
+Mods that are on ACE's UPackages list can add their own file hashes and tweak
+list rules by installing an ACEFileList-ModName.txt and/or
+ACETweakList-ModName.txt file in the FileListPath/TweakListPath folder. Replace
+ModName with the base name of the mod (the file name without extension).
+
+You can use UnrealEd or wotgrealexporter to export the source code from the
+.u files or you can download the source code from:
 
 https://github.com/stijn-volckaert/
 

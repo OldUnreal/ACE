@@ -17,7 +17,7 @@
 -------------------------------------------------------------------------------
 
 v1.4e:
-* [CHANGED] Updated NPLoader (v23 -> v25). Prompts to reinstall Windows
+* [CHANGED] Updated NPLoader (v2.3 -> v2.5). Prompts to reinstall Windows
   libraries when switching between 32-bit and 64-bit UT; files stay in System
 * [FIXED] Windows server DLL not loading on Win7 / Server 2008 R2
 
@@ -33,19 +33,19 @@ v1.4d:
 * [FIXED] Fixed a 64-bit NPLoader bind fatal ("not a DLL package") by installing
   the loader .u into the engine package path (System) instead of the binaries
   directory (System64)
-* [CHANGED] Updated NPLoader (v22 -> v23), including install-then-reconnect so
+* [CHANGED] Updated NPLoader (v2.2 -> v2.3), including install-then-reconnect so
   natives bind against settled files
 * [ADDED] OLDSKOOL.U to the default ACEFileList
 
 v1.4c:
 * [FIXED] Fixed a bug that was causing a false positive kick for Editor.dll
-* [FIXED] ACE Logo can now we moved using LogoXPos and LogoYPos config settings
+* [FIXED] ACE Logo can now be moved using LogoXPos and LogoYPos config settings
 * [FIXED] Fixed a bug that was causing OpenAL32.dll to get flagged on 469b clients
 * [ADDED] Several small adjustments to reduce timeouts
 
 v1.4b:
 * [ADDED] ACE Windows x64 server support
-* [CHANGED] Minor update to NPLoader (v21 -> v22) and ACE installation
+* [CHANGED] Minor update to NPLoader (v2.1 -> v2.2) and ACE installation
 
 v1.4a:
 * [ADDED] Native 64-bit Windows client support. ACE now runs natively on 64-bit
@@ -423,7 +423,7 @@ still accessible from uscript.
 * [CHANGED] Client-side config is now read from/written to a version 
 independent config file. As a result, future versions of ACE will automatically
 use the same client settings as the v0.9 client.
-* [CHANGED] New networking system. The new system is much more resillient 
+* [CHANGED] New networking system. The new system is much more resilient
 against laggy/lossy connections.
 
 v0.8h:
@@ -474,7 +474,7 @@ for your computer.
 packages to join anyway (eg: UnrealShare, UnrealI)
 * [ADDED] Experimental TO 3.40 compatibility
 * [FIXED] Fixed a major bug in ACEIpDrv that caused timeouts and random
-random internal errors
+internal errors
 * [FIXED] Playback of serverside demos (needs testing!)
 * [FIXED] ACE dll no longer required to watch demos (needs testing!)
 * [CHANGED] New unloading method. No more freezes at the end of the map
@@ -581,7 +581,7 @@ v0.6n:
 * [FIXED] Demo playback issues
 * [FIXED] Incompatibility with anthchecker
 * [FIXED] Garbagecollector issues
-* [FIXED] Memory corruption that caused random crashes. These crashes occured very frequently if
+* [FIXED] Memory corruption that caused random crashes. These crashes occurred very frequently if
 the client was recording a demo using udemo's auto-recording function
 * [CHANGED] bNonStrictCapping option can now be used to let UTGLR handle frameratelimiting.
 Enabling this option might reduce "lag" and screen tearing while using UTGLR renderers with SwapInterval=0
@@ -649,7 +649,7 @@ v0.6b:
 * [ADDED] Windows 2000 compatibility
 
 v0.6:
-* [ADDED] ACE now has it's own implementation of IpDrv.dll/IpDrv.so/IpDrv.u. This is
+* [ADDED] ACE now has its own implementation of IpDrv.dll/IpDrv.so/IpDrv.u. This is
 done to circumvent some ancient bugs in this package.
 * [FIXED] Minor memory leaks
 * [FIXED] HUD rendering crash
@@ -695,7 +695,7 @@ v0.2:
 * [FIXED] Fixed a rare deadlock that caused the client to freeze during mapswitches.
 * [FIXED] Fixed a bug that caused players with non-US English versions of Windows XP to time out.
 * [CHANGED] Reworked feedback system for better security and performance.
-* [CHANGED] ACE now creates a seperate external log for each kick. Additionally,
+* [CHANGED] ACE now creates a separate external log for each kick. Additionally,
 ACE can create a logfile with information about all the players who've joined
 your server (bExternalLogJoins). One log per map is created.
 * [ADDED] Screenshots. Thanks to PackageHelper_v12, ACE can store the 
@@ -705,7 +705,7 @@ appear after the player has finished the upload of the sshot (or after 20
 seconds if the screenshot upload fails).
 * [ADDED] Merged the SoundFix code with ACE. This fix addresses a problem that
 causes certain sounds to become amplified when a demo is being recorded.
-* [ADDED] When bAutoConfig is enabled, ACE will spawn it's AutoConfig component
+* [ADDED] When bAutoConfig is enabled, ACE will spawn its AutoConfig component
 during map startup. This component tries to set up your UPackages list for you.
 The AutoConfig is open source!
 
@@ -734,7 +734,7 @@ v2.3:
   files
 
 v2.2:
-* [CHANGED] Package revision bump (v21 -> v22) with rebuilt native libraries
+* [CHANGED] Package revision bump (v2.1 -> v2.2) with rebuilt native libraries
 
 v2.1:
 * [ADDED] 64-bit Windows client support. NPLoader now correctly installs and

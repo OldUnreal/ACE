@@ -47,7 +47,7 @@ one of the servers returns a valid IP.
 
 4) You can choose to run your server in a LAN only. This is also possible with
 the default settings but for performance reasons you might want to add the
-following lines to the server's ini file:
+following lines to your server's ini file:
 
 [ACEv14e_S.ACEActor]
 bAutoFindWANIP=false

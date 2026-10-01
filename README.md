@@ -5,7 +5,7 @@ Tournament, written by AnthraX. It runs on the game server. It checks every
 connecting player's game, both the native code and the UnrealScript packages,
 and kicks players whose game has been tampered with.
 
-Current version: **v1.4e**, installed through **NPLoader v25**.
+Current version: **v1.4e**, installed through **NPLoader v2.5**.
 
 ## Features
 
@@ -49,7 +49,8 @@ copy the files depends on your UT version:
 Then:
 
 1. Make sure the `Logs` and `Shots` folders exist in your UT folder.
-2. In `UnrealTournament.ini`, under `[Engine.GameEngine]`, add:
+2. In your server's ini file (`UnrealTournament.ini`, or the file passed with
+   `ini=` on the command line), under `[Engine.GameEngine]`, add:
    ```ini
    ServerActors=NPLoader_v25.NPLActor
    ```

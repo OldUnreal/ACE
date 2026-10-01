@@ -12,7 +12,7 @@
                            (c) 2009-2026 - AnthraX
 ===============================================================================
 
-To configure ACE, add the following lines to the server.ini:
+To configure ACE, add the following lines to your server's ini file:
 
 [ACEv14e_S.ACEActor]
 ; Networking options
@@ -132,9 +132,9 @@ Checking Options:
   check. Please note that the initial check usually takes longer to complete
   than the periodic check.
 * PeriodicCheckInterval: Time between consecutive periodic checks
-* PeriodicCheckVariance: Randomizes check interval by ±X seconds to make timing
-  unpredictable (default: 15). E.g., with Interval=45 and Variance=15, checks
-  happen between 30-60 seconds apart.
+* PeriodicCheckVariance: Randomizes check interval by +/-X seconds to make
+  timing unpredictable (default: 15). E.g., with Interval=45 and Variance=15,
+  checks happen between 30-60 seconds apart.
 * PeriodicCheckTimeout: Time allowed for players to complete the periodic check
 * bStrictSystemLibraryChecks: When set to true, ACE will kick for patches in
   system libraries. Very few cheats patch system libraries but lots of external
@@ -143,9 +143,9 @@ Checking Options:
   enable this for non-competitive games!
 * bCheckSpectators: When set to true, ACE will also check spectators
 
------------------------
-Thread Watchdog Option:
------------------------
+------------------------
+Thread Watchdog Options:
+------------------------
 Monitors ACE's internal threads for tampering attempts.
 
 RECOMMENDATION: Leave disabled for casual servers. Enable for competitive play.
@@ -161,13 +161,14 @@ AutoConfig Options:
   the UPackages list.
 * AutoConfigPackage: Name of the AutoConfig package (without the .u extension)
 * UPackages: Names of extra mods to be checked by ACE (with .u extensions)
-* NativePackages: Names of extra libraries to be checked by ACE (with .dll)
+* NativePackages: Names of extra libraries to be checked by ACE (with .dll or
+  .so)
 * PackageHelperClass: Name of the packagehelper class. AutoConfig uses
   packagehelper to figure out which mods it should add to the UPackages list
 
----------------------------------
+----------------------
 Experimental Settings:
----------------------------------
+----------------------
 These features are DISABLED by default. Test thoroughly before enabling kicks.
 
 RECOMMENDATION: Start with Action=0 (Log only) to monitor for false positives.
