@@ -15,12 +15,25 @@
 1) Installation
 ---------------
 
+The package contains one folder per architecture: System (32-bit), System64
+(x86-64) and SystemARM64 (Linux ARM64). How you copy them depends on your UT
+version:
+
+* UT 469f and newer keep all files in a single System folder. Copy the
+  contents of the package's System folder into your server's System folder.
+  On a 64-bit server, then copy the contents of System64 (x86-64) or
+  SystemARM64 (ARM64) over it, replacing files with the same name. Copy System
+  first: System64 and SystemARM64 do not contain every package.
+
+* UT 469e and older use the same folder layout as this package. Unzip the
+  package into your server's UT folder as is.
+
 *******************************************************************************
 ****************** UPGRADING FROM A PREVIOUS ACE INSTALLATION *****************
 *******************************************************************************
 
-* Unzip this package into your server's UT folder. Make sure that the Logs and
-Shots folders are created!
+* Install the files as described above. Make sure that the Logs and Shots
+folders are created!
 
 * Open your server's ini file (UnrealTournament.ini, or the file passed with
 ini= on the command line) and browse to the [Engine.GameEngine] section.
@@ -47,8 +60,8 @@ make sure you delete the FileListProvider and TweakListProvider settings!
 ************************* INSTALLING ON A CLEAN SERVER ************************
 *******************************************************************************
 
-* Unzip this package into your server's UT folder. Make sure that the Logs and
-Shots folders are created!
+* Install the files as described above. Make sure that the Logs and Shots
+folders are created!
 
 * Open your server's ini file (UnrealTournament.ini, or the file passed with
 ini= on the command line) and browse to the [Engine.GameEngine] section.

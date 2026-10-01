@@ -40,9 +40,10 @@ copy the files depends on your UT version:
 
 - **UT 469f and newer.** All files live in a single `System` folder. Copy the
   contents of the package's `System` folder into your server's `System`
-  folder. On a 64-bit server, also copy the contents of `System64` (x86-64) or
-  `SystemARM64` (ARM64) into `System`, and replace any files with the same
-  name.
+  folder. On a 64-bit server, then copy the contents of `System64` (x86-64)
+  or `SystemARM64` (ARM64) over it, and replace any files with the same name.
+  Copy `System` first, because `System64` and `SystemARM64` don't contain
+  every package.
 - **UT 469e and older.** These versions use the same folder names as the
   package. Unzip the package into your server's UT folder as it is.
 
