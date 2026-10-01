@@ -98,7 +98,7 @@ Screenshot Options:
 -------------------
 * SShotPath: Folder in which the screenshots should be stored
 * SShotPrefix: Prefix for the screenshot file names
-* SShotTimeout: Time allowed for players to complete sending a screenshot
+* SShotTimeOut: Time allowed for players to complete sending a screenshot
 * bSShotWhenKick: When set to true, the gameserver will request screenshots to
   be taken when a player is kicked
 * AdminPass: when configured, this adminpass can be used to take silent 
