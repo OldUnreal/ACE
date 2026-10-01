@@ -74,7 +74,14 @@ UPackages[0]=
 UPackages[1]=
 
 Then add your mod to this list. If you run a mod called MyMod.u for example,
-simply add UPackages[0]=MyMod.u. You can add up to 32 packages to this list.
+simply add UPackages[0]=MyMod.u. You can add up to 255 packages to this list.
+
+AutoConfig only adds mods that are in the server's package map (normally via
+ServerPackages), because the server doesn't make clients load anything else.
+On every map it rebuilds the UPackages list under [ACEv14e_S.ACEActor] and
+drops entries that are not in the package map. If you set bAutoConfig=false,
+AutoConfig does not run and you must maintain that list yourself, using base
+names (e.g. UPackages[0]=MyMod).
 
 3) To the mod authors
 ---------------------

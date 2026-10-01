@@ -70,15 +70,21 @@ ACEv14d_S.dll, ACEv14d_C.u, ...).
 
 ## Configuration
 
-The defaults work for most servers. The main settings live in
-`[ACEv14e_S.ACEActor]`:
+The defaults work for most servers. Most settings live in
+`[ACEv14e_S.ACEActor]`. AutoConfig has its own section.
 
 - **Custom mods that ACE doesn't recognize.** If a mod does its own rendering
-  or input handling, list it in `UPackages` (up to 32 entries):
+  or input handling, add it to AutoConfig's `UPackages` list (up to 255
+  entries):
   ```ini
   [ACEv14_AutoConfig.ACEAutoConfigActor]
   UPackages[0]=MyMod.u
   ```
+  On every map, AutoConfig rebuilds the `UPackages` list in
+  `[ACEv14e_S.ACEActor]`. It only keeps mods that are in the server's package
+  map, which normally means they're listed in `ServerPackages`. With
+  `bAutoConfig=false` nothing rebuilds that list, so maintain it by hand
+  using base names (`MyMod`).
 - **Firewall or fixed port.** ACE needs its own **UDP** port. By default it
   uses the game port + 2, or the next free port above that.
 - **NAT.** ACE works out the server's WAN IP automatically. You can also set

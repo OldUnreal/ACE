@@ -160,9 +160,12 @@ AutoConfig Options:
 * bAutoConfig: When set to true, ACE will attempt to automatically configure
   the UPackages list.
 * AutoConfigPackage: Name of the AutoConfig package (without the .u extension)
-* UPackages: Names of extra mods to be checked by ACE (with .u extensions)
+* UPackages: Packages checked by ACE, by base name (e.g. MyMod, not MyMod.u).
+  With bAutoConfig=true, AutoConfig rebuilds this list on every map. Add extra
+  mods to UPackages under [ACEv14_AutoConfig.ACEAutoConfigActor] instead (see
+  INSTALL.txt)
 * NativePackages: Names of extra libraries to be checked by ACE (with .dll or
-  .so)
+  .so). AutoConfig does not touch this list
 * PackageHelperClass: Name of the packagehelper class. AutoConfig uses
   packagehelper to figure out which mods it should add to the UPackages list
 
