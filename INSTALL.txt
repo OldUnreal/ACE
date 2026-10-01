@@ -99,7 +99,8 @@ https://github.com/stijn-volckaert/
 4) Feedback and Support
 -----------------------
 
-https://ut99.org/viewforum.php?f=66
+Ask in the #ace-discussion channel on the OldUnreal Discord: 
+https://discord.gg/thURucxzs6
 
 ===============================================================================
 
