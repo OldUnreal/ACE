@@ -9,7 +9,7 @@
                           |/     \|(_______/(_______/
 
                             for Unreal Tournament
-                           (c) 2009-2026 - AnthraX
+                           (c) 2008-2026 OldUnreal
 ===============================================================================
 
 If you run your server behind a NAT router, the server needs to find out its
