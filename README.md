@@ -57,17 +57,12 @@ Then:
    ```
 3. Restart the server. The rest of the installation happens automatically.
 
-**Upgrading?** First remove every `ServerActors`/`ServerPackages` line that
-refers to an older ACE or NPLoader version. Then delete the old ACE files
-(`ACEv14d_*`, `NPLoader_ACEv14d.int`, …). If you copy settings over from an
-older install, delete the `FileListProvider*`/`TweakListProvider*` settings.
+**Upgrading from an older ACE?** Before you restart the server in step 3,
+remove every `ServerActors`/`ServerPackages` line that refers to an older ACE
+or NPLoader version, and delete the old ACE files (`ACEv14d_*`,
+`NPLoader_ACEv14d.int`, …). If you copy settings over from an older install,
+delete the `FileListProvider*`/`TweakListProvider*` settings.
 [INSTALL.txt](INSTALL.txt) has the full steps.
-
-**Installation Note:** It's recommended to delete the previous ACE version's
-files from your server's System folder(s) before rebooting.
-At the very least, remove the old NPLoader int file (e.g. NPLoader_ACEv14d.int)
-and the old ACE packages and libraries (e.g. ACEv14d_S.u, ACEv14d_S.so,
-ACEv14d_S.dll, ACEv14d_C.u, ...).
 
 ## Configuration
 
