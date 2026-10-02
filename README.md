@@ -5,7 +5,8 @@ Tournament, written by AnthraX. It runs on the game server. It checks every
 connecting player's game, both the native code and the UnrealScript packages,
 and kicks players whose game has been tampered with.
 
-Current version: **v1.4e**, installed through **NPLoader v2.5**.
+ACE is installed through NPLoader. [changes.txt](changes.txt) lists the
+release history of both, newest first.
 
 ## Features
 
