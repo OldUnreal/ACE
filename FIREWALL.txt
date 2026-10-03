@@ -22,7 +22,7 @@ however, there is an option to specify which port ACE should use.
 To configure a fixed port, add the following lines to your server's ini file:
 ===============================================================================
 
-[ACEv14e_S.ACEActor]
+[ACEv14f_S.ACEActor]
 ACEPort=<YourPort>
 bAllowOtherPorts=false
 
@@ -30,7 +30,7 @@ bAllowOtherPorts=false
 Alternatively, you can use the default settings:
 ===============================================================================
 
-[ACEv14e_S.ACEActor]
+[ACEv14f_S.ACEActor]
 ACEPort=0
 bAllowOtherPorts=true
 

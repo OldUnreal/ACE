@@ -19,9 +19,12 @@ are several options:
 1) You can manually set the WAN IP of the server. To do this, add the following
 lines to your server's ini file:
 
-[ACEv14e_S.ACEActor]
-bAutoFindWANIp=false
-ForcedWANIP="YourWANIP"
+[ACEv14f_S.ACEActor]
+bAutoFindWANIP=false
+ForcedWANIP=YourWANIP
+
+Replace YourWANIP with your public IPv4 address. With autodetection disabled,
+ACE will not contact the WAN query servers.
 
 2) The server can query the utgl masterserver to find out its WAN ip. This is 
 the default setting, you do not need to change any ini settings to use this
@@ -30,26 +33,33 @@ option.
 3) The server can attempt to query other webservers to find out its WAN ip. To
 do this, add the following lines to your server's ini file:
 
-[ACEv14e_S.ACEActor]
-WANQueryServer(0)="utgl.unrealadmin.org/ip.php"
-WANQueryServer(1)=""
-WANQueryServer(2)=""
-WANQueryServer(3)=""
-WANQueryServer(4)=""
-WANQueryServer(5)=""
-WANQueryServer(6)=""
-WANQueryServer(7)=""
-WANQueryServer(8)=""
-WANQueryServer(9)=""
+[ACEv14f_S.ACEActor]
+WANQueryServer[0]=utgl.unrealadmin.org/ip.php
+WANQueryServer[1]=
+WANQueryServer[2]=
+WANQueryServer[3]=
+WANQueryServer[4]=
+WANQueryServer[5]=
+WANQueryServer[6]=
+WANQueryServer[7]=
+WANQueryServer[8]=
+WANQueryServer[9]=
 
 You can add up to 10 servers in this list. ACE will query them one by one until
 one of the servers returns a valid IP.
+Use host/path addresses without http:// or https://. The response body must
+contain only an IPv4 address; surrounding whitespace is allowed.
+
+With bCacheWANIP=true, successful lookups are saved in CachedWANIP. When WAN
+lookup starts, ACE uses ForcedWANIP first, or CachedWANIP if caching is enabled.
+If all queries fail, that address is retained. Disabling autodetection also
+allows use of the cached address when no manual address is set.
 
 4) You can choose to run your server in a LAN only. This is also possible with
 the default settings but for performance reasons you might want to add the
 following lines to your server's ini file:
 
-[ACEv14e_S.ACEActor]
-bAutoFindWANIp=false
+[ACEv14f_S.ACEActor]
+bAutoFindWANIP=false
 
 ===============================================================================

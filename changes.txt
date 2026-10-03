@@ -16,6 +16,36 @@
                                   ACE Changes
 -------------------------------------------------------------------------------
 
+v1.4f:
+* [CHANGED] Updated NPLoader (v2.5 -> v2.6), fixing installation on older
+  Windows clients while allowing previous versions to coexist
+* [FIXED] AutoConfig losing existing and manual packages without its helper
+* [FIXED] Accesses to missing AutoConfig and PackageHelper actors
+* [ADDED] ACE AntiTweak now detects tweaks to supported Renderer properties,
+  such as NoDrawComplexSurface and HDR settings
+* [FIXED] Incorrect connection timeout and keepalive calculations
+* [FIXED] Reconnects losing the active check state and old connection cleanup
+  disconnecting a newly connected client
+* [FIXED] Races during client shutdown and hangs when disconnecting during
+  initialization
+* [FIXED] Buffer ownership errors and memory leaks in check reports, file uploads,
+  screenshots and failed packet sends
+* [FIXED] Invalid packet lengths, encryption flags and property reads
+* [FIXED] List downloads exceeding their timeout during DNS lookup or transfer,
+  accepting truncated responses or failing to decode chunked responses
+* [FIXED] Invalid downloaded lists replacing working lists and malformed tweak
+  patterns throwing errors when evaluated
+* [FIXED] Tweak lists ignoring their configured folder
+* [FIXED] Incorrect player manager port retries and missing startup errors
+* [FIXED] WAN lookups running with autodetection disabled and a manual IP set
+* [FIXED] Misleading WAN failure warnings with a configured/cached IP and the
+  WAN update flag remaining set after all query servers failed
+* [FIXED] Invalid WAN replies being accepted as IP addresses and connection
+  attempts continuing after DNS failure
+* [FIXED] Linux WAN interface detection skipping fallback commands on empty
+  results and performing unnecessary DNS lookups
+* [CHANGED] List downloads now verify HTTPS certificates and hostnames
+
 v1.4e:
 * [CHANGED] Updated NPLoader (v2.3 -> v2.5). Prompts to reinstall Windows
   libraries when switching between 32-bit and 64-bit UT; files stay in System
@@ -715,6 +745,10 @@ v0.1:
 -------------------------------------------------------------------------------
                                 NPLoader Changes
 -------------------------------------------------------------------------------
+
+v2.6:
+* [FIXED] Helper installation directory error on older Windows clients
+* [CHANGED] New package names allow v2.6 and previous versions to coexist
 
 v2.5:
 * [FIXED] Repeated install prompts after restarting and paths containing spaces

@@ -14,14 +14,14 @@
 
 To configure ACE, add the following lines to your server's ini file:
 
-[ACEv14e_S.ACEActor]
+[ACEv14f_S.ACEActor]
 ; Networking options
 ACEPort=0
 bAllowOtherPorts=true
 bAutoFindWANIp=true
 bCacheWANIP=true
 WANQueryServer[0]=utgl.unrealadmin.org/ip.php
-ForcedWANIP=0.0.0.0
+ForcedWANIP=
 ; Screenshot options
 SShotPath=../Shots/
 SShotPrefix=[ACE]
@@ -32,17 +32,15 @@ AdminPass=
 bAutoUpdateFileList=true
 FileListName=ACEFileList.txt
 FileListPath=./
-FileListProviderHost=utgl.unrealadmin.org
-FileListProviderPath=/ACE/
 ; Tweaklist options
 TweakListName=ACETweakList.txt
+bAutoUpdateTweakList=true
 TweakListPath=./
-TweakListProviderHost=utgl.unrealadmin.org
-TweakListProviderPath=/ACE/
 ; Logging options
 LogPath=../Logs/
 LogPrefix=[ACE]
 bLogKick=true
+bVerboseLogging=false
 ; Autoconfig options
 bAutoConfig=true
 AutoConfigPackage=ACEv14_AutoConfig
@@ -73,7 +71,7 @@ bCodeInjectionIgnoreSigned=true
 bAllowCrosshairScaling=true
 bShowLogo=true
 LogoXPos=10
-LogoYPos=100
+LogoYPos=-100
 HUDMutatorClass=IACEv14.ACEHUDMutator
 bCreateEndShots=false
 
@@ -89,16 +87,16 @@ Networking Options:
 -------------------
 * ACEPort, bAllowOtherPorts: See FIREWALL.txt
 * bAutoFindWANIp, bCacheWANIP, WANQueryServer: See NAT.txt
-* ForcedWANIP: Forces ACE clients to connect to the playermanager through the
-  specified IPv4 address. ACE will ignore this setting if bAutoFindWANIp is
-  enabled.
+* ForcedWANIP: Sets the server's public IPv4 address. Leave empty for automatic
+  detection. Set bAutoFindWANIP=false to use only the manual address. With
+  autodetection enabled, a successful lookup replaces it; failed lookups retain it.
 
 -------------------
 Screenshot Options:
 -------------------
 * SShotPath: Folder in which the screenshots should be stored
 * SShotPrefix: Prefix for the screenshot file names
-* SShotTimeOut: Time allowed for players to complete sending a screenshot
+* SShotTimeout: Time allowed for players to complete sending a screenshot
 * bSShotWhenKick: When set to true, the gameserver will request screenshots to
   be taken when a player is kicked
 * AdminPass: when configured, this adminpass can be used to take silent 
@@ -111,6 +109,11 @@ FileList Options:
   updates for the FileList. 
 * FileListName: Name of the FileList
 * FileListPath: Folder in which to store the FileList
+
+The built-in providers use raw.githubusercontent.com with path
+/stijn-volckaert/ACE_Lists/main/. Leave provider overrides out of your ini to
+use these defaults.
+
 * FileListProviderHost: Hostname of the server that hosts the latest file lists
 * FileListProviderPath: Path (on the host) in which we should look for the file
   lists
@@ -123,6 +126,14 @@ Logging Options:
 * LogPath: Folder in which the logs should be stored
 * LogPrefix: Prefix for the log file names
 * bLogKick: If set to true, ACE will create log files when kicking a player
+* bVerboseLogging: Extra diagnostic logging, including system-library integrity
+  violations and check traces (default: false).
+* bExternalLog: Enables external UnrealScript/EventHandler logging (default:
+  false). This is separate from bLogKick.
+* bExternalLogJoins: Writes player events to the EventHandler's external log
+  (default: false). Also requires bExternalLog=true.
+* JoinLogPath, JoinLogPrefix: Folder and filename prefix for that event log.
+  Both default to empty; configure them when enabling external join logging.
 
 -----------------
 Checking Options:
@@ -133,15 +144,33 @@ Checking Options:
   than the periodic check.
 * PeriodicCheckInterval: Time between consecutive periodic checks
 * PeriodicCheckVariance: Randomizes check interval by +/-X seconds to make
-  timing unpredictable (default: 15). E.g., with Interval=45 and Variance=15,
-  checks happen between 30-60 seconds apart.
+  unpredictable (default: 15). E.g., with Interval=45 and Variance=15, checks
+  happen between 30-60 seconds apart.
 * PeriodicCheckTimeout: Time allowed for players to complete the periodic check
 * bStrictSystemLibraryChecks: When set to true, ACE will kick for patches in
   system libraries. Very few cheats patch system libraries but lots of external
   tools do. Thus, setting this to true may cause lots of false positives.
 * bEnableAntiTweak: Enables ACE's tweak blocking. I strongly urge you not to
   enable this for non-competitive games!
+  Includes renderer property checks on Windows and Linux.
 * bCheckSpectators: When set to true, ACE will also check spectators
+
+Renderer Tweak Rules:
+---------------------
+Enable bEnableAntiTweak. Use Renderer and the property's short name, without
+its package/class path. ACE checks registered settings on the active renderer.
+Properties, including NoDrawComplexSurface, are allowed unless a Renderer rule
+restricts them. Supported types: BOOL, INT, FLOAT and STRING.
+ALLOW rules limit permitted values; DENY rules block matching values.
+
+Examples with illustrative limits; separate fields with tabs:
+ALLOW	Renderer	LODBias	LE	FLOAT	4.0
+ALLOW	Renderer	AdditionalHDRExpansion	LE	FLOAT	2.0
+DENY	Renderer	HDRWhiteBalanceNits	GT	INT	200
+DENY	Renderer	NoDrawComplexSurface	EQ	BOOL	True
+
+Reconnect clients after changing the selected properties. Disable
+bAutoUpdateTweakList when maintaining a local list.
 
 ------------------------
 Thread Watchdog Options:
@@ -160,14 +189,19 @@ AutoConfig Options:
 * bAutoConfig: When set to true, ACE will attempt to automatically configure
   the UPackages list.
 * AutoConfigPackage: Name of the AutoConfig package (without the .u extension)
-* UPackages: Packages checked by ACE, by base name (e.g. MyMod, not MyMod.u).
-  With bAutoConfig=true, AutoConfig rebuilds this list on every map. Add extra
-  mods to UPackages under [ACEv14_AutoConfig.ACEAutoConfigActor] instead (see
-  INSTALL.txt)
-* NativePackages: Names of extra libraries to be checked by ACE (with .dll or
-  .so). AutoConfig does not touch this list
-* PackageHelperClass: Name of the packagehelper class. AutoConfig uses
-  packagehelper to figure out which mods it should add to the UPackages list
+* UPackages: Package base names to be checked, without .u extensions (MyMod).
+  AutoConfig rebuilds this list when bAutoConfig=true. Set bAutoConfig=false
+  to maintain it manually, using consecutive entries starting at index 0.
+* NativePackages: Names of extra libraries to be checked by ACE (with .dll)
+* PackageHelperClass: PackageHelper class used by ACE (default:
+  PackageHelper_v15.PHActor).
+
+For extra AutoConfig packages, use its separate ini section:
+
+[ACEv14_AutoConfig.ACEAutoConfigActor]
+UPackages[0]=MyMod.u
+
+Supports up to 255 entries, indexed from 0 to 254. See INSTALL.txt for details.
 
 ----------------------
 Experimental Settings:

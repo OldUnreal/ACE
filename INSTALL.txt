@@ -15,28 +15,26 @@
 1) Installation
 ---------------
 
-The package contains one folder per architecture: System (32-bit), System64
-(x86-64) and SystemARM64 (Linux ARM64). How you copy them depends on your UT
-version:
+The package contains System (32-bit), System64 (x86-64) and SystemARM64
+(Linux ARM64) folders. Copy the files according to your UT version:
 
-* UT 469f and newer keep all files in a single System folder. Copy the
-  contents of the package's System folder into your server's System folder.
-  On a 64-bit server, then copy the contents of System64 (x86-64) or
-  SystemARM64 (ARM64) over it, replacing files with the same name. Copy System
-  first: System64 and SystemARM64 do not contain every package.
+* UT 469f and newer: Copy the package's System files into the server's System
+  folder first. For a 64-bit server, then copy System64 (x86-64) or SystemARM64
+  (ARM64) into the same folder, replacing files with the same name.
 
-* UT 469e and older use the same folder layout as this package. Unzip the
-  package into your server's UT folder as is.
+* UT 469e and older: Unzip into the server's UT folder, keeping the package's
+  folder layout.
+
+Make sure the Logs and Shots folders exist in your UT folder.
 
 *******************************************************************************
 ****************** UPGRADING FROM A PREVIOUS ACE INSTALLATION *****************
 *******************************************************************************
 
-* Install the files as described above. Make sure that the Logs and Shots
-folders are created!
+* Copy the package files as described above.
 
 * Open your server's ini file (UnrealTournament.ini, or the file passed with
-ini= on the command line) and browse to the [Engine.GameEngine] section.
+  ini= on the command line) and browse to the [Engine.GameEngine] section.
 
 * Remove all ServerActors and ServerPackages for previous ACE and NPLoader
   packages.
@@ -49,10 +47,11 @@ ini= on the command line) and browse to the [Engine.GameEngine] section.
 
 * Add:
 
-  ServerActors=NPLoader_v25.NPLActor
+  ServerActors=NPLoader_v26.NPLActor
 
-* If you are copying over the ACE settings from a previous installation, please
-make sure you delete the FileListProvider and TweakListProvider settings!
+* If you copy ACE settings from a previous installation, delete
+  FileListProviderHost, FileListProviderPath, TweakListProviderHost and
+  TweakListProviderPath so ACE uses the current defaults.
   	
 * Reboot your server. The rest of the installation is automatic.
   
@@ -60,15 +59,14 @@ make sure you delete the FileListProvider and TweakListProvider settings!
 ************************* INSTALLING ON A CLEAN SERVER ************************
 *******************************************************************************
 
-* Install the files as described above. Make sure that the Logs and Shots
-folders are created!
+* Copy the package files as described above.
 
 * Open your server's ini file (UnrealTournament.ini, or the file passed with
-ini= on the command line) and browse to the [Engine.GameEngine] section.
+  ini= on the command line) and browse to the [Engine.GameEngine] section.
 
 * Add:
   
-  ServerActors=NPLoader_v25.NPLActor
+  ServerActors=NPLoader_v26.NPLActor
     
 * Reboot your server. The rest of the installation is automatic.
 
@@ -87,14 +85,18 @@ UPackages[0]=
 UPackages[1]=
 
 Then add your mod to this list. If you run a mod called MyMod.u for example,
-simply add UPackages[0]=MyMod.u. You can add up to 255 packages to this list.
+simply add UPackages[0]=MyMod.u. You can add up to 255 packages, indexed from
+0 to 254. With AutoConfig's PackageHelper enabled, entries are kept only if
+present in the server's package map, normally through ServerPackages.
 
-AutoConfig only adds mods that are in the server's package map (normally via
-ServerPackages), because the server doesn't make clients load anything else.
-On every map it rebuilds the UPackages list under [ACEv14e_S.ACEActor] and
-drops entries that are not in the package map. If you set bAutoConfig=false,
-AutoConfig does not run and you must maintain that list yourself, using base
-names (e.g. UPackages[0]=MyMod).
+If you disable AutoConfig, maintain the ACEActor list directly using package
+base names, without the .u extension:
+
+[ACEv14f_S.ACEActor]
+bAutoConfig=false
+UPackages[0]=MyMod
+
+See SETTINGS.txt for server and AutoConfig options.
 
 3) To the mod authors
 ---------------------
@@ -102,19 +104,15 @@ names (e.g. UPackages[0]=MyMod).
 The following packages are open source:
 
 * IACEv14: This package contains the interfaces for many of the ACE classes.
-Do NOT recompile this package! It is open source so you can see how it works.
+Do NOT recompile this package! Rebuilding changes its package GUID and breaks
+compatibility with servers using the original package.
 
-* ACEv14e_EH: This is the ACE event handler. It is very similar to UTDC's
+* ACEv14f_EH: This is the ACE event handler. It is very similar to UTDC's
 EventActor. You're more than welcome to edit this package and to share your
 modifications.
 
 * ACEv14_AutoConfig: This is a small mod that automatically sets up the ACE
 UPackages list. Once again, you're more than welcome to edit this.
-
-Mods that are on ACE's UPackages list can add their own file hashes and tweak
-list rules by installing an ACEFileList-ModName.txt and/or
-ACETweakList-ModName.txt file in the FileListPath/TweakListPath folder. Replace
-ModName with the base name of the mod (the file name without extension).
 
 You can use UnrealEd or wotgrealexporter to export the source code from the
 .u files or you can download the source code from:
@@ -124,7 +122,7 @@ https://github.com/stijn-volckaert/
 4) Feedback and Support
 -----------------------
 
-Ask in the #ace-discussion channel on the OldUnreal Discord: 
+Ask in #ace-discussion on the OldUnreal Discord:
 https://discord.gg/thURucxzs6
 
 ===============================================================================
