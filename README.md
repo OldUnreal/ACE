@@ -53,7 +53,7 @@ Then:
 1. Make sure the `Logs` and `Shots` folders exist in your UT folder.
 2. In your server's ini file, under `[Engine.GameEngine]`, add:
    ```ini
-   ServerActors=NPLoader_v25.NPLActor
+   ServerActors=NPLoader_v26.NPLActor
    ```
    Use `UnrealTournament.ini`, or the file passed with `ini=` on the command line.
 3. Restart the server. The rest of the installation happens automatically.
