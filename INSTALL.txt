@@ -47,7 +47,7 @@ Make sure the Logs and Shots folders exist in your UT folder.
 
 * Add:
 
-  ServerActors=NPLoader_v26.NPLActor
+  ServerActors=NPLoader_v27.NPLActor
 
 * If you copy ACE settings from a previous installation, delete
   FileListProviderHost, FileListProviderPath, TweakListProviderHost and
@@ -66,7 +66,7 @@ Make sure the Logs and Shots folders exist in your UT folder.
 
 * Add:
   
-  ServerActors=NPLoader_v26.NPLActor
+  ServerActors=NPLoader_v27.NPLActor
     
 * Reboot your server. The rest of the installation is automatic.
 
@@ -92,7 +92,7 @@ present in the server's package map, normally through ServerPackages.
 If you disable AutoConfig, maintain the ACEActor list directly using package
 base names, without the .u extension:
 
-[ACEv14f_S.ACEActor]
+[ACEv14g_S.ACEActor]
 bAutoConfig=false
 UPackages[0]=MyMod
 
@@ -107,7 +107,7 @@ The following packages are open source:
 Do NOT recompile this package! Rebuilding changes its package GUID and breaks
 compatibility with servers using the original package.
 
-* ACEv14f_EH: This is the ACE event handler. It is very similar to UTDC's
+* ACEv14g_EH: This is the ACE event handler. It is very similar to UTDC's
 EventActor. You're more than welcome to edit this package and to share your
 modifications.
 

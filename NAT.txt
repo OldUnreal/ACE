@@ -19,7 +19,7 @@ are several options:
 1) You can manually set the WAN IP of the server. To do this, add the following
 lines to your server's ini file:
 
-[ACEv14f_S.ACEActor]
+[ACEv14g_S.ACEActor]
 bAutoFindWANIP=false
 ForcedWANIP=YourWANIP
 
@@ -33,7 +33,7 @@ option.
 3) The server can attempt to query other webservers to find out its WAN ip. To
 do this, add the following lines to your server's ini file:
 
-[ACEv14f_S.ACEActor]
+[ACEv14g_S.ACEActor]
 WANQueryServer[0]=utgl.unrealadmin.org/ip.php
 WANQueryServer[1]=
 WANQueryServer[2]=
@@ -59,7 +59,7 @@ allows use of the cached address when no manual address is set.
 the default settings but for performance reasons you might want to add the
 following lines to your server's ini file:
 
-[ACEv14f_S.ACEActor]
+[ACEv14g_S.ACEActor]
 bAutoFindWANIP=false
 
 ===============================================================================

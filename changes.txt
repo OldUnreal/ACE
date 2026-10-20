@@ -16,6 +16,30 @@
                                   ACE Changes
 -------------------------------------------------------------------------------
 
+v1.4g:
+* [CHANGED] Updated NPLoader (v2.6 -> v2.7) to improve installation paths
+  and recovery after interrupted exports
+* [ADDED] Support for loading an additional ACE file list
+* [FIXED] False positive kicks on 32-bit and 64-bit Windows clients
+* [FIXED] False positive kicks for players using custom UWindow menu skins
+* [FIXED] False positive kicks for the Steam overlay on 64-bit clients
+* [FIXED] False positive kicks on 64-bit clients running certain third-party
+  software
+* [FIXED] False positive kicks for Wine clients whose Visual C++ runtime lacks
+  functions used by UT v469f
+* [FIXED] 32-bit clients being kicked on Windows on ARM
+* [FIXED] 64-bit Windows servers crashing when kicking players or completing
+  screenshots
+* [FIXED] Rare internal error kicks during checks
+* [FIXED] Kicks after switching renderers during a game
+* [FIXED] Timeout kicks after a brief connection loss while joining
+* [FIXED] Signed Windows system files being reported as unsigned
+* [FIXED] Wildcard Renderer tweak rules kicking players for unrelated settings
+* [FIXED] Mods with very complex scripts failing package verification
+* [FIXED] Incomplete checks and incorrect reports
+* [FIXED] Crashes when checking malformed data
+* [FIXED] Builds reusing outdated libraries
+
 v1.4f:
 * [CHANGED] Updated NPLoader (v2.5 -> v2.6), fixing installation on older
   Windows clients while allowing previous versions to coexist
@@ -745,6 +769,12 @@ v0.1:
 -------------------------------------------------------------------------------
                                 NPLoader Changes
 -------------------------------------------------------------------------------
+
+v2.7:
+* [FIXED] Initial loader installation failing when linker output has no newlines
+* [FIXED] Installation paths containing spaces or Windows drive letters
+* [FIXED] Incomplete loader installation continuing after an export fails
+* [CHANGED] Interrupted installation requires confirmation before retrying
 
 v2.6:
 * [FIXED] Helper installation directory error on older Windows clients

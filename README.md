@@ -53,7 +53,7 @@ Then:
 1. Make sure the `Logs` and `Shots` folders exist in your UT folder.
 2. In your server's ini file, under `[Engine.GameEngine]`, add:
    ```ini
-   ServerActors=NPLoader_v26.NPLActor
+   ServerActors=NPLoader_v27.NPLActor
    ```
    Use `UnrealTournament.ini`, or the file passed with `ini=` on the command line.
 3. Restart the server. The rest of the installation happens automatically.
@@ -74,7 +74,7 @@ If you copy settings from an older installation, remove
 The defaults work for most servers. Server settings live in the installed
 version's ACEActor section. AutoConfig has its own section.
 
-The examples below use ACE v1.4e. Replace `v14e` with your installed revision.
+The examples below use ACE v1.4g. Replace `v14g` with your installed revision.
 The shared AutoConfig section remains `ACEv14_AutoConfig.ACEAutoConfigActor`
 for ACE v1.4 releases.
 
@@ -95,7 +95,7 @@ To maintain the ACEActor list manually, disable AutoConfig and use package
 base names without `.u`. Keep entries consecutive, starting at index 0:
 
 ```ini
-[ACEv14e_S.ACEActor]
+[ACEv14g_S.ACEActor]
 bAutoConfig=false
 UPackages[0]=MyMod
 ```
@@ -107,7 +107,7 @@ Behind a NAT router, ACE detects the server's public IP automatically.
 To set it manually, disable autodetection and provide your public IPv4 address:
 
 ```ini
-[ACEv14e_S.ACEActor]
+[ACEv14g_S.ACEActor]
 bAutoFindWANIP=false
 ForcedWANIP=203.0.113.10
 ```
@@ -139,7 +139,7 @@ These packages are open source:
 - **IACEv14** contains the interfaces for the ACE classes. **Do not recompile
   it**, because a rebuild changes its package GUID and breaks compatibility
   with servers using the original package.
-- **ACEv14e_EH** is the event handler, similar to UTDC's EventActor. Its name
+- **ACEv14g_EH** is the event handler, similar to UTDC's EventActor. Its name
   follows the installed ACE revision. You may edit it and share your changes.
 - **ACEv14_AutoConfig** fills in the `UPackages` list automatically. You may
   edit it.

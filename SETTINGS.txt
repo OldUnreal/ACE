@@ -14,7 +14,7 @@
 
 To configure ACE, add the following lines to your server's ini file:
 
-[ACEv14f_S.ACEActor]
+[ACEv14g_S.ACEActor]
 ; Networking options
 ACEPort=0
 bAllowOtherPorts=true
@@ -119,6 +119,14 @@ use these defaults.
   lists
 * bAutoUpdateTweakList, TweakListName, TweakListPath, TweakListProviderHost,
   TweakListProviderPath: Same as the above, but for the tweak list
+
+With the default list names, place ACEFileList-ACEv14g.txt in
+FileListPath to load additional file hashes for this ACE release.
+
+Mods in UPackages can also provide ACEFileList-ModName.txt in FileListPath
+and ACETweakList-ModName.txt in TweakListPath. ModName is the package name
+without its extension. Additional lists load automatically alongside the
+main lists and remain active after automatic updates.
 
 ----------------
 Logging Options:
